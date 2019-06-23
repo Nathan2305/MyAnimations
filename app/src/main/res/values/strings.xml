@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Animations</string>
+    <string name="transition">Transition</string>
 </resources>

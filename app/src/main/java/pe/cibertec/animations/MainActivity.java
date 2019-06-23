@@ -1,5 +1,8 @@
 package pe.cibertec.animations;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,7 +13,7 @@ import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
     ImageView imageView;
-    Button zoom, clockWize, fade, move;
+    Button zoom, clockWize, fade, move, btn_transition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
         clockWize = findViewById(R.id.clockWize);
         fade = findViewById(R.id.fade);
         move = findViewById(R.id.move);
+        btn_transition = findViewById(R.id.btn_transition);
+
         zoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,6 +55,17 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Animation animation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.move);
                 imageView.startAnimation(animation);
+            }
+        });
+
+        btn_transition.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), TransitionActivity.class);
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                    ActivityOptions op = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, imageView, getString(R.string.app_name));
+                    startActivity(intent, op.toBundle());
+                }
             }
         });
     }
